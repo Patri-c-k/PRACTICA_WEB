@@ -69,6 +69,15 @@ img {
 }
 .hover-opacity:hover { opacity: 0.7; }
 
+/* --- STICKY HEADER --- */
+.header {
+  position: sticky;
+  top: 0;
+  z-index: 900;
+  background-color: #fff;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
 /* --- 2. ТОП БАР --- */
 .top-bar {
   background-color: #f5f5f5;
@@ -586,6 +595,176 @@ img {
 .site-logo { transition: transform .3s ease; }
 
 /* ==========================================================
+   МОБИЛЬНАЯ КНОПКА-БУРГЕР ДЛЯ ОТКРЫТИЯ МЕНЮ (всегда скрыта на десктопе)
+   ========================================================== */
+.mobile-menu-toggle {
+  display: none;
+}
+
+/* Оверлей затемнения */
+.mobile-nav-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 1100;
+}
+.mobile-nav-overlay.open {
+  display: block;
+}
+
+/* Сам мобильный дровер */
+.mobile-nav-drawer {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 300px;
+  max-width: 90vw;
+  height: 100%;
+  background: #1976d2;
+  z-index: 1200;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.mobile-nav-drawer.open {
+  transform: translateX(0);
+}
+
+/* Шапка дровера */
+.mobile-nav-drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  background: #1565c0;
+  flex-shrink: 0;
+}
+.mobile-nav-drawer__logo {
+  color: #fff;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: -0.5px;
+}
+.mobile-nav-drawer__logo span {
+  color: #ff9800;
+}
+.mobile-nav-drawer__close {
+  width: 32px;
+  height: 32px;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 22px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.85;
+}
+.mobile-nav-drawer__close:hover { opacity: 1; }
+
+/* Список категорий в дровере */
+.mobile-nav-drawer__list {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+.mobile-nav-drawer__list::-webkit-scrollbar { width: 4px; }
+.mobile-nav-drawer__list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
+
+.mobile-nav-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px 20px;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 400;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+  cursor: pointer;
+  text-decoration: none;
+  transition: background 0.15s;
+}
+.mobile-nav-item:hover { background: rgba(255,255,255,0.1); }
+.mobile-nav-item .arrow-right { opacity: 0.7; }
+
+/* Вторичная панель (подкатегории) */
+.mobile-nav-subpanel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #1976d2;
+  transform: translateX(100%);
+  transition: transform 0.28s ease;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.mobile-nav-subpanel.open {
+  transform: translateX(0);
+}
+.mobile-nav-subpanel__back {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px;
+  background: #1565c0;
+  color: #fff;
+  font-weight: 700;
+  font-size: 15px;
+  cursor: pointer;
+  border: none;
+  text-align: left;
+  width: 100%;
+  flex-shrink: 0;
+}
+.mobile-nav-subpanel__back::before {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-top: 2px solid #fff;
+  border-left: 2px solid #fff;
+  transform: rotate(-45deg);
+}
+.mobile-nav-subpanel__items {
+  flex: 1;
+  overflow-y: auto;
+  padding: 8px 0;
+}
+.mobile-nav-subpanel__items::-webkit-scrollbar { width: 4px; }
+.mobile-nav-subpanel__items::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 4px; }
+
+.mobile-subcat-group {
+  padding: 12px 20px;
+  border-bottom: 1px solid rgba(255,255,255,0.12);
+}
+.mobile-subcat-group__title {
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 8px;
+  text-decoration: none;
+}
+.mobile-subcat-group__title:hover { text-decoration: underline; }
+.mobile-subcat-item {
+  display: block;
+  color: rgba(255,255,255,0.8);
+  font-size: 13px;
+  padding: 5px 0 5px 26px;
+  text-decoration: none;
+}
+.mobile-subcat-item:hover { color: #fff; text-decoration: underline; }
+
+/* ==========================================================
    АДАПТИВНОСТЬ ДЛЯ МОБИЛЬНЫХ (320-480px)
    ========================================================== */
 @media (max-width: 480px) {
@@ -597,10 +776,44 @@ img {
   .phone-link { font-size: 13px; }
   .search-form { order: 3; width: 100%; max-width: 100%; }
   .search-btn { padding: 8px 12px; }
-  
+
+  /* Показываем кнопку-бургер */
+  .mobile-menu-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 38px;
+    height: 38px;
+    background: #1976d2;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    flex-shrink: 0;
+    order: -1;
+  }
+  .mobile-menu-toggle span,
+  .mobile-menu-toggle span::before,
+  .mobile-menu-toggle span::after {
+    display: block;
+    width: 18px;
+    height: 2px;
+    background: #fff;
+    position: relative;
+    transition: all 0.25s;
+  }
+  .mobile-menu-toggle span::before,
+  .mobile-menu-toggle span::after {
+    content: '';
+    position: absolute;
+    left: 0;
+  }
+  .mobile-menu-toggle span::before { top: -6px; }
+  .mobile-menu-toggle span::after { top: 6px; }
+
+  /* Скрываем десктопный каталог и nav на мобильном */
   .menu-bar__container--bg { overflow-x: visible; }
-  .catalog-btn { padding: 12px 16px; font-size: 13px; }
-  .main-nav { gap: 16px; margin-left: 12px; }
+  .catalog-btn { display: none; }
+  .main-nav { display: none; }
   .catalog-dropdown { width: 100vw; max-width: calc(100vw - 20px); left: 0; }
 
   .hero-banner { margin-top: 10px; }

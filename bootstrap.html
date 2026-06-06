@@ -243,12 +243,9 @@
             </div>
           </div>
 
-          <!-- Bootstrap Navbar Toggler (гамбургер для мобильных) -->
-          <button class="navbar-toggler ms-auto me-2 my-auto border-0" type="button"
-                  data-bs-toggle="collapse" data-bs-target="#navbarCollapse"
-                  aria-controls="navbarCollapse" aria-expanded="false" aria-label="Меню"
-                  style="color:#333;">
-            <span class="navbar-toggler-icon"></span>
+          <!-- Кастомный мобильный бургер -->
+          <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Открыть меню">
+            <span></span>
           </button>
 
           <!-- Bootstrap Collapse Nav -->
@@ -1148,6 +1145,33 @@
         </div>
         <button type="button" class="btn-close btn-close-white me-2 m-auto" data-bs-dismiss="toast" aria-label="Закрыть"></button>
       </div>
+    </div>
+  </div>
+
+
+  <!-- МОБИЛЬНЫЙ ОВЕРЛЕЙ И ДРОВЕР -->
+  <div class="mobile-nav-overlay" id="mobileNavOverlay"></div>
+  <div class="mobile-nav-drawer" id="mobileNavDrawer">
+    <div class="mobile-nav-drawer__header">
+      <span class="mobile-nav-drawer__logo"><span>&#x21AF;</span>5КВТ</span>
+      <button class="mobile-nav-drawer__close" id="mobileNavClose" aria-label="Закрыть">&#x00D7;</button>
+    </div>
+    <div class="mobile-nav-drawer__list" id="mobileNavList">
+      <a class="mobile-nav-item" data-sub="accumulators">Аккумуляторы <span class="arrow-right"></span></a>
+      <a class="mobile-nav-item" data-sub="control-blocks">Блоки контроля <span class="arrow-right"></span></a>
+      <a class="mobile-nav-item" data-sub="generators">Генераторы <span class="arrow-right"></span></a>
+      <a class="mobile-nav-item" data-sub="climate">Климатическая техника <span class="arrow-right"></span></a>
+      <a class="mobile-nav-item" data-sub="heating">Отопление <span class="arrow-right"></span></a>
+      <a class="mobile-nav-item" data-sub="perforators">Перфораторы <span class="arrow-right"></span></a>
+      <a class="mobile-nav-item" data-sub="wires">Провода <span class="arrow-right"></span></a>
+      <a class="mobile-nav-item" href="#">Люстры</a>
+      <a class="mobile-nav-item" href="#">Инструменты</a>
+      <a class="mobile-nav-item" href="#">Электрика</a>
+    </div>
+    <!-- Панель подкатегорий -->
+    <div class="mobile-nav-subpanel" id="mobileSubpanel">
+      <button class="mobile-nav-subpanel__back" id="mobileSubBack">Назад</button>
+      <div class="mobile-nav-subpanel__items" id="mobileSubItems"></div>
     </div>
   </div>
 

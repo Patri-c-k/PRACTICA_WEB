@@ -88,4 +88,120 @@ document.addEventListener('DOMContentLoaded', () => {
     initSlider('slider-news', 'news-prev', 'news-next');
     initSlider('slider-promo', 'promo-prev', 'promo-next');
 
+
+    // 3. МОБИЛЬНЫЙ БУРГЕР-ДРОВЕР
+    // ==========================================
+    const mobileToggle = document.getElementById('mobileMenuToggle');
+    const mobileDrawer = document.getElementById('mobileNavDrawer');
+    const mobileOverlay = document.getElementById('mobileNavOverlay');
+    const mobileClose = document.getElementById('mobileNavClose');
+    const mobileSubpanel = document.getElementById('mobileSubpanel');
+    const mobileSubBack = document.getElementById('mobileSubBack');
+    const mobileSubItems = document.getElementById('mobileSubItems');
+
+    const subCategories = {
+        'accumulators': {
+            title: 'Аккумуляторы',
+            groups: [
+                { title: 'Автомобильные АКБ', items: ['Кальциевые (Ca/Ca)', 'Гибридные (Sb/Ca)', 'Гелевые (GEL)'] },
+                { title: 'Промышленные АКБ', items: ['Для ИБП', 'Для солнечных батарей'] },
+                { title: 'Зарядные устройства', items: [] },
+                { title: 'Клеммы и провода', items: [] },
+                { title: 'Аксессуары', items: [] },
+            ]
+        },
+        'control-blocks': {
+            title: 'Блоки контроля',
+            groups: [
+                { title: 'Контроллеры напряжения', items: [] },
+                { title: 'Модули управления АВР', items: [] },
+                { title: 'Датчики и реле', items: [] },
+            ]
+        },
+        'generators': {
+            title: 'Генераторы',
+            groups: [
+                { title: 'Бензиновые генераторы', items: [] },
+                { title: 'Дизельные электростанции', items: [] },
+                { title: 'Инверторные модели', items: [] },
+            ]
+        },
+        'climate': {
+            title: 'Климатическая техника',
+            groups: [
+                { title: 'Кондиционеры', items: [] },
+                { title: 'Обогреватели', items: [] },
+                { title: 'Очистители воздуха', items: [] },
+            ]
+        },
+        'heating': {
+            title: 'Отопление',
+            groups: [
+                { title: 'Котлы', items: [] },
+                { title: 'Радиаторы', items: [] },
+            ]
+        },
+        'perforators': {
+            title: 'Перфораторы',
+            groups: [
+                { title: 'Электрические', items: [] },
+                { title: 'Аккумуляторные', items: [] },
+            ]
+        },
+        'wires': {
+            title: 'Провода',
+            groups: [
+                { title: 'Силовые кабели', items: [] },
+                { title: 'Сигнальные кабели', items: [] },
+            ]
+        },
+    };
+
+    function openDrawer() {
+        mobileDrawer && mobileDrawer.classList.add('open');
+        mobileOverlay && mobileOverlay.classList.add('open');
+        document.body.style.overflow = 'hidden';
+    }
+
+    function closeDrawer() {
+        mobileDrawer && mobileDrawer.classList.remove('open');
+        mobileOverlay && mobileOverlay.classList.remove('open');
+        mobileSubpanel && mobileSubpanel.classList.remove('open');
+        document.body.style.overflow = '';
+    }
+
+    if (mobileToggle) {
+        mobileToggle.addEventListener('click', (e) => {
+            e.stopPropagation();
+            openDrawer();
+        });
+    }
+    if (mobileClose) mobileClose.addEventListener('click', closeDrawer);
+    if (mobileOverlay) mobileOverlay.addEventListener('click', closeDrawer);
+    if (mobileSubBack) mobileSubBack.addEventListener('click', () => {
+        mobileSubpanel && mobileSubpanel.classList.remove('open');
+    });
+
+    document.querySelectorAll('.mobile-nav-item[data-sub]').forEach(item => {
+        item.addEventListener('click', (e) => {
+            e.preventDefault();
+            const key = item.getAttribute('data-sub');
+            const data = subCategories[key];
+            if (!data || !mobileSubItems || !mobileSubpanel) return;
+
+            mobileSubBack.textContent = '← ' + data.title;
+            let html = '';
+            data.groups.forEach(g => {
+                html += `<div class="mobile-subcat-group">`;
+                html += `<a href="#" class="mobile-subcat-group__title"><span class="toggle-icon">+</span> ${g.title}</a>`;
+                g.items.forEach(it => {
+                    html += `<a href="#" class="mobile-subcat-item">${it}</a>`;
+                });
+                html += `</div>`;
+            });
+            mobileSubItems.innerHTML = html;
+            mobileSubpanel.classList.add('open');
+        });
+    });
+
 });
